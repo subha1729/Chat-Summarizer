@@ -1,0 +1,86 @@
+.details-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.back-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  transform: translateY(-2px);
+}
+
+.details-card {
+  max-width: 800px; /* Added */
+  margin: 0 auto;   /* Added */
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.details-title {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.details-meta {
+  opacity: 0.7;
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+
+.details-content {
+  line-height: 1.8;
+  font-size: 18px;
+  text-align: left;
+}
+
+.details-content h2 {
+  margin-top: 35px;
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+
+.details-content ul {
+  padding-left: 25px;
+  margin: 15px 0;
+}
+
+.details-content li {
+  margin-bottom: 10px;
+}
+
+.details-content p {
+  margin-bottom: 15px;
+}
+
+/* Overall summary highlight */
+.details-content p:last-child {
+  background: rgba(255,255,255,0.05);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.delete-btn {
+  background: #c0392b;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.delete-btn:hover {
+  opacity: 0.9;
+}

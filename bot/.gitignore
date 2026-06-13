@@ -1,0 +1,29 @@
+# Environment Variables
+.env
+.env.local
+
+# Dependencies
+node_modules/
+
+# Build Files
+dist/
+build/
+
+# Logs
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Vite
+.vite/
+
+# IDE
+.vscode/
+
+node_modules/
+**/node_modules/
+
+.env
+**/.env

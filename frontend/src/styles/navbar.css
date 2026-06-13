@@ -1,0 +1,72 @@
+.navbar{
+  min-height:80px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  padding:0 48px;
+  background:rgba(3, 7, 18, 0.72);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  position:sticky;
+  top:0;
+  z-index:120;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 10px 30px rgba(3, 7, 18, 0.35);
+}
+
+.navbar-brand,
+.navbar-links a,
+.login-pill {
+  text-decoration:none;
+  color:#eff6ff;
+  font-weight:700;
+}
+
+.navbar-brand {
+  font-size:1.05rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+
+.navbar-links {
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.navbar-links a {
+  color:#cbd5e1;
+  font-weight:600;
+  padding:8px 12px;
+  border-radius:999px;
+  transition: all 0.2s ease;
+}
+.navbar-links a:hover { background:rgba(124,92,255,0.12); color:#fff; }
+
+.navbar-user { display:flex; align-items:center; }
+
+.profile-menu { position:relative; }
+.profile-trigger { background:transparent; border:none; padding:0; cursor:pointer; }
+.profile-trigger img { width:42px; height:42px; border-radius:50%; border:2px solid rgba(99,102,241,0.7); object-fit:cover; }
+.profile-dropdown {
+  position:absolute; right:0; top:52px; min-width:220px;
+  background:#111827; border:1px solid rgba(148,163,184,0.18); border-radius:16px; padding:12px;
+  box-shadow:0 18px 30px rgba(15,23,42,0.45); display:grid; gap:8px;
+}
+.profile-dropdown strong, .profile-dropdown span { color:#fff; }
+.profile-dropdown span { color:#cbd5e1; font-size:0.92rem; }
+.profile-dropdown button { border:none; border-radius:10px; background:linear-gradient(135deg,#ef4444,#dc2626); color:#fff; padding:10px; font-weight:700; cursor:pointer; }
+.login-pill {
+  padding:10px 14px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#7C5CFF,#9F7CFF);
+  box-shadow: 0 10px 20px rgba(124,92,255,0.22);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.login-pill:hover { transform: translateY(-1px); box-shadow: 0 14px 24px rgba(124,92,255,0.32); }
+
+@media (max-width: 860px) {
+  .navbar { flex-wrap:wrap; justify-content:center; }
+  .navbar-links { order:3; width:100%; }
+}
