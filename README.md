@@ -36,27 +36,15 @@ Users can:
 
 ---
 
-### Server & Channel Selection
-
-![Server Selection](./screenshots/server-channel-selection.png)
-
----
-
-### AI Summary Generation
-
-![Summary Generation](./screenshots/summary-generation.png)
-
----
-
 ### Summary History
 
-![Summary History](./screenshots/summary-history.png)
+![Summary History](./screenshots/history.png)
 
 ---
 
-### Profile Page
+### Server Details
 
-![Profile Page](./screenshots/profile-page.png)
+![Server Details](./screenshots/server.png)
 
 ---
 
