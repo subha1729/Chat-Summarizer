@@ -38,7 +38,13 @@ Users can:
 
 ### Summary History
 
-![Summary History](./screenshots/summary-history.png)
+![Summary History](./screenshots/history.png)
+
+---
+
+### Summary History
+
+![Server Details](./screenshots/server.png)
 
 ---
 
