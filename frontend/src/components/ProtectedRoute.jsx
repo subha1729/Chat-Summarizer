@@ -8,10 +8,25 @@ function ProtectedRoute({ children }) {
     useState(false);
 
   useEffect(() => {
+    // const checkAuth = async () => {
+    //   try {
+    //     // await API.get("/auth/me");
+    //     API.get("/api/auth/check"),
+    //     setAuthenticated(true);
+    //   } catch {
+    //     setAuthenticated(false);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
+
     const checkAuth = async () => {
       try {
-        await API.get("/auth/me");
-        setAuthenticated(true);
+        const res = await API.get("/api/auth/check");
+
+        setAuthenticated(
+          res.data.authenticated
+        );
       } catch {
         setAuthenticated(false);
       } finally {

@@ -36,14 +36,19 @@ function useDashboardData() {
         accountRes,
         guildRes
       ] = await Promise.all([
-        API.get("/auth/me"),
+        // API.get("/auth/me"),
+        API.get("/api/auth/check"),
         API.get("/summaries"),
         API.get("/stats"),
         API.get("/accounts"),
         API.get("/guilds")
       ]);
 
-      setUser(userRes.data);
+      if (userRes.data.authenticated) {
+        setUser(userRes.data.user);
+      } else {
+        setUser(null);
+      }
 
       setSummaries(
         summariesRes.data

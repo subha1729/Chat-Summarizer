@@ -11,8 +11,14 @@ function Navbar() {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const res = await API.get("/auth/me");
-        setUser(res.data);
+        // const res = await API.get("/auth/me");
+        const res = await API.get("/api/auth/check");
+
+        if (res.data.authenticated) {
+          setUser(res.data.user);
+        } else {
+          setUser(null);
+        }
       } catch {
         setUser(null);
       }

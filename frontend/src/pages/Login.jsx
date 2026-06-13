@@ -13,10 +13,13 @@ function Login() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await API.get("/auth/me");
-        navigate("/dashboard");
-      } catch {
-        // User not logged in
+        const res = await API.get("/api/auth/check");
+
+        if (res.data.authenticated) {
+          navigate("/dashboard");
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
 
@@ -54,7 +57,11 @@ function Login() {
   };
 
   const loginWithGoogle = () => {
-    window.location.href = "http://localhost:5000/api/auth/google";
+    // window.location.href =
+    //   "https://chat-summarizer-api.onrender.com/api/auth/google";
+
+    window.location.href =
+       `${import.meta.env.VITE_API_URL}/api/auth/google`;
   };
 
   return (

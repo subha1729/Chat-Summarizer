@@ -42,7 +42,7 @@ function ConnectedApps({ accounts }) {
         <button
           className={`app-card ${isDiscordConnected ? "connected" : ""}`}
           onClick={() =>
-            (window.location.href = "http://localhost:5000/api/auth/discord")
+            (window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/discord`)
           }
         >
           <span className="app-icon"><FaDiscord size={22} /></span>
