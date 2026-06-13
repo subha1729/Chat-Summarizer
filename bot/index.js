@@ -25,8 +25,7 @@ client.on("messageCreate", async (message) => {
   try {
     
     const response = await axios.post(
-      "http://localhost:5000/api/messages",
-      {
+           `${process.env.BACKEND_URL}/api/messages`,      {
         discordUser: message.author.username,
         content: message.content,
         channelId: message.channel.id,
