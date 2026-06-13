@@ -32,8 +32,8 @@ router.get(
     console.log("Session After Login:");
     console.log("OAuth User:", req.user);
     res.redirect(
-      "http://localhost:5173/dashboard"
-    );
+     `${process.env.FRONTEND_URL}/dashboard`
+    )
 
   }
 );
@@ -66,7 +66,7 @@ router.get(
     console.log(req.user);
 
     res.redirect(
-      "http://localhost:5173/dashboard"
+      `${process.env.FRONTEND_URL}/dashboard`
     );
 
   }
