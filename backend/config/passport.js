@@ -5,6 +5,8 @@ const DiscordStrategy =
 const ConnectedAccount =
   require("../models/ConnectedAccount");
 
+console.log("DISCORD_CLIENT_ID =", process.env.DISCORD_CLIENT_ID);
+console.log("DISCORD_CLIENT_SECRET =", process.env.DISCORD_CLIENT_SECRET);
 passport.use(
   new DiscordStrategy(
     {
