@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import API from "../services/api";
 import "../styles/login.css";
 
+
+console.log("API URL:", import.meta.env.VITE_API_URL);
 function Login() {
   const navigate = useNavigate();
   const [mode, setMode] = useState("signin");
