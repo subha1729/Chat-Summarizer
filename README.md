@@ -20,6 +20,46 @@ Users can:
 
 ---
 
+---
+
+## 📸 Screenshots
+
+### Landing Page
+
+![Landing Page](./screenshots/landing-page.png)
+
+---
+
+### Dashboard
+
+![Dashboard](./screenshots/dashboard.png)
+
+---
+
+### Server & Channel Selection
+
+![Server Selection](./screenshots/server-channel-selection.png)
+
+---
+
+### AI Summary Generation
+
+![Summary Generation](./screenshots/summary-generation.png)
+
+---
+
+### Summary History
+
+![Summary History](./screenshots/summary-history.png)
+
+---
+
+### Profile Page
+
+![Profile Page](./screenshots/profile-page.png)
+
+---
+
 ## Features
 
 ### Authentication
