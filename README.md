@@ -42,7 +42,7 @@ Users can:
 
 ---
 
-### Summary History
+### Server Details
 
 ![Server Details](./screenshots/server.png)
 
