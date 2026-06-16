@@ -73,10 +73,11 @@ function Dashboard() {
 
         try {
 
-          const res =
-            await API.get(
-              `/messages/channels?guildId=${selectedGuild}`
-            );
+          const res = await API.get("/api/messages/channels", {
+  params: {
+    guildId: selectedGuild,
+  },
+});
 
           setChannels(
             res.data

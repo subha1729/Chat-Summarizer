@@ -32,7 +32,8 @@ router.get(
 );
 
 router.get(
-  "/channels",
+  // "/channels",
+  "api/messages/channels",
   sessionAuth,
   getChannels
 );
