@@ -7,6 +7,7 @@ const genAI = new GoogleGenerativeAI(
 const model = genAI.getGenerativeModel({
   model: "gemini-2.5-flash"
 });
+console.log("Gemini initialized");
 
 const askGemini = async (prompt) => {
   try {
