@@ -5,24 +5,33 @@ const genAI = new GoogleGenerativeAI(
 );
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash"
+  model: "gemini-2.0-flash"
 });
 console.log("Gemini initialized");
 
 const askGemini = async (prompt) => {
-  try {
-    const result =
-      await model.generateContent(prompt);
+  let lastError;
 
-    return result.response.text();
+  for (let i = 0; i < 3; i++) {
+    try {
+      const result =
+        await model.generateContent(prompt);
 
-  } catch (error) {
-    console.error(
-      "Gemini Error:",
-      error.message
-    );
-    throw error;
+      return result.response.text();
+    } catch (error) {
+      lastError = error;
+
+      console.log(
+        `Gemini retry ${i + 1}/3`
+      );
+
+      await new Promise(resolve =>
+        setTimeout(resolve, 2000)
+      );
+    }
   }
+
+  throw lastError;
 };
 
 
