@@ -4,6 +4,10 @@ const genAI = new GoogleGenerativeAI(
   process.env.GEMINI_API_KEY
 );
 
+console.log(
+  "Gemini Key Prefix:",
+  process.env.GEMINI_API_KEY?.substring(0, 10)
+);
 const model = genAI.getGenerativeModel({
   model: "gemini-2.5-flash-lite"
 });
