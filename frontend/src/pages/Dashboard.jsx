@@ -112,7 +112,7 @@ function Dashboard() {
         setLoading(true);
 
         await API.post(
-          "/summaries/generate",
+          "/api/summaries/generate",
           {
             guildId:
               selectedGuild,
