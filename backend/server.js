@@ -77,6 +77,19 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/"
+  }),
+  (req, res) => {
+    console.log("Google Login Success (alias callback)");
+    console.log(req.user);
+    res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+  }
+);
+
 app.get("/api/auth/check", (req, res) => {
   res.json({
     authenticated:

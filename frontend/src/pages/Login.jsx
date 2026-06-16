@@ -59,11 +59,11 @@ function Login() {
   };
 
   const loginWithGoogle = () => {
-    // window.location.href =
-    //   "https://chat-summarizer-api.onrender.com/api/auth/google";
+    const apiUrl =
+      import.meta.env.VITE_API_URL ||
+      "https://chat-summarizer-api.onrender.com";
 
-    window.location.href =
-       `${import.meta.env.VITE_API_URL}/api/auth/google`;
+    window.location.href = `${apiUrl}/api/auth/google`;
   };
 
   return (
