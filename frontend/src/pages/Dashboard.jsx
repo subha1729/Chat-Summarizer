@@ -149,7 +149,7 @@ function Dashboard() {
 
         const res =
           await API.post(
-            "/summaries/topic-summary",
+            "/api/summaries/topic-summary",
             {
               guildId:
                 selectedGuild,
@@ -182,7 +182,7 @@ function Dashboard() {
 
         const res =
           await API.post(
-            "/summaries/user-summary",
+            "/api/summaries/user-summary",
             {
               guildId:
                 selectedGuild,
