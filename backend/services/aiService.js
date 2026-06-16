@@ -1,23 +1,23 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(
-  process.env.GEMINI_API_KEY
-);
-
-
-console.log(
-  "Gemini Key Prefix:",
-  process.env.GEMINI_API_KEY?.substring(0, 10)
+process.env.GEMINI_API_KEY
 );
 
 console.log(
-  "Gemini Key Length:",
-  process.env.GEMINI_API_KEY?.length
+"Gemini Key Prefix:",
+process.env.GEMINI_API_KEY?.substring(0, 10)
+);
+
+console.log(
+"Gemini Key Length:",
+process.env.GEMINI_API_KEY?.length
 );
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash-lite"
+model: "gemini-2.5-flash-lite"
 });
+
 console.log("Gemini initialized");
 
 const askGemini = async (prompt) => {
@@ -29,6 +29,7 @@ const askGemini = async (prompt) => {
         await model.generateContent(prompt);
 
       return result.response.text();
+
     } catch (error) {
       lastError = error;
 
@@ -45,132 +46,187 @@ const askGemini = async (prompt) => {
   throw lastError;
 };
 
-
+// ==========================
+// MAIN SUMMARY
+// ==========================
 const generateSummary = async (messages) => {
-  const chatText = messages
-    .map(
-      (msg) =>
-        `${msg.discordUser}: ${msg.content}`
-    )
-    .join("\n");
+const chatText = messages
+.map(
+(msg) =>
+`${msg.discordUser}: ${msg.content}`
+)
+.join("\n");
 
-  const prompt = `
-You are an expert Discord chat summarizer.
+const prompt = `
+You are an expert Discord community analyst.
 
-Analyze the conversation and return ONLY valid markdown.
+Analyze the conversation and return ONLY markdown.
 
-Format:
+Rules:
+
+* Use ONLY information present in the conversation.
+* Never invent information.
+* Ignore greetings, emojis, spam and repeated test messages.
+* Merge related topics.
+* Keep output concise.
+* Maximum 250 words.
+
+Return in EXACT format:
+
+# Conversation Summary
 
 ## Main Topics
-- topic
-- topic
+
+* Topic
+
+## Key Insights
+
+* Insight
 
 ## Important Decisions
-- decision
-- decision
+
+* Decision
 
 ## Action Items
-- action
-- action
+
+* Action
+
+## Key Participants
+
+* Username: contribution summary
 
 ## Overall Summary
-Short paragraph (2-3 lines).
 
-Rules:
-- Use only information present in the chat.
-- Do not invent details.
-- If a section has no content write:
-  - None discussed
-- Keep bullets under 10 words.
-- Maximum 120 words total.
+A concise 3-5 sentence summary.
+
+If the conversation is only testing, greetings or spam:
+
+# Conversation Summary
+
+## Main Topics
+
+* Testing
+
+## Key Insights
+
+* No meaningful discussion
+
+## Important Decisions
+
+* None discussed
+
+## Action Items
+
+* None discussed
+
+## Key Participants
+
+* Participants were testing the system
+
+## Overall Summary
+
+The conversation consisted primarily of test messages and did not contain meaningful discussion.
 
 Conversation:
 ${chatText}
 `;
 
-  return await askGemini(prompt);
+return await askGemini(prompt);
 };
 
+// ==========================
+// USER SUMMARY
+// ==========================
 const generateUserSummary = async (messages) => {
-  const chatText = messages
-    .map(
-      (msg) =>
-        `${msg.discordUser}: ${msg.content}`
-    )
-    .join("\n");
+const chatText = messages
+.map(
+(msg) =>
+`${msg.discordUser}: ${msg.content}`
+)
+.join("\n");
 
-  const prompt = `
-Analyze the Discord conversation.
+const prompt = `
+You are an expert collaboration analyst.
 
-Create a User Contributions report.
+Analyze the conversation and summarize each participant's contribution.
+
+Rules:
+
+* Ignore greetings and meaningless messages.
+* Include only meaningful contributors.
+* Maximum 3 bullet points per user.
+* Do not invent information.
+* Return ONLY markdown.
 
 Format:
 
-## User Contributions
+# User Contributions
 
-### Username
-- contribution
-- contribution
+## Username
 
-### Username
-- contribution
-- contribution
+* Contribution
+* Contribution
 
-Rules:
-- Include only users who contributed meaningful information.
-- Ignore greetings and one-word messages.
-- Use only information from the conversation.
-- Maximum 2 bullet points per user.
-- Keep bullets under 10 words.
-- Return valid markdown only.
+## Username
+
+* Contribution
+* Contribution
 
 Conversation:
 ${chatText}
 `;
 
-  return await askGemini(prompt);
+return await askGemini(prompt);
 };
 
+// ==========================
+// TOPIC SUMMARY
+// ==========================
 const generateTopicSummary = async (messages) => {
-  const chatText = messages
-    .map(
-      (msg) =>
-        `${msg.discordUser}: ${msg.content}`
-    )
-    .join("\n");
+const chatText = messages
+.map(
+(msg) =>
+`${msg.discordUser}: ${msg.content}`
+)
+.join("\n");
 
-  const prompt = `
-Analyze the Discord conversation.
+const prompt = `
+You are an expert discussion analyst.
 
-Group discussion by topics.
-
-Return:
-
-## Topics
-
-### Topic Name
-- point 1
-- point 2
-
-### Topic Name
-- point 1
-- point 2
+Analyze the conversation and group messages into discussion topics.
 
 Rules:
-- Maximum 5 topics
-- Keep points short
-- Do not invent information
+
+* Combine related discussions.
+* Ignore greetings, spam and test messages.
+* Maximum 5 topics.
+* Keep points concise.
+* Do not invent information.
+* Return ONLY markdown.
+
+Format:
+
+# Topic Analysis
+
+## Topic Name
+
+* Point
+* Point
+
+## Topic Name
+
+* Point
+* Point
 
 Conversation:
 ${chatText}
 `;
 
-  return await askGemini(prompt);
+return await askGemini(prompt);
 };
-
 
 module.exports = {
-  generateSummary,
-  generateUserSummary,
-  generateTopicSummary
+generateSummary,
+generateUserSummary,
+generateTopicSummary
 };

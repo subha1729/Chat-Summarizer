@@ -42,33 +42,43 @@ router.get(
 // GOOGLE OAUTH
 // =====================
 
-router.get(
-  "/google",
-  passport.authenticate(
-    "google",
-    {
-      scope: ["profile", "email"]
-    }
-  )
-);
+const getGoogleCallbackUrl = (req) => {
+  const protocol = req.protocol;
+  const host = req.get("host");
+  const envUrl = process.env.GOOGLE_CALLBACK_URL;
+
+  const callbackUrl =
+    envUrl ||
+    `${protocol}://${host}/api/auth/google/callback`;
+
+  console.log("Google callback URL for auth:", callbackUrl);
+  return callbackUrl;
+};
+
+router.get("/google", (req, res, next) => {
+  const callbackURL = getGoogleCallbackUrl(req);
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+    callbackURL
+  })(req, res, next);
+});
 
 router.get(
   "/google/callback",
-  passport.authenticate(
-    "google",
-    {
-      failureRedirect: "/"
-    }
-  ),
+  (req, res, next) => {
+    const callbackURL = getGoogleCallbackUrl(req);
+    passport.authenticate("google", {
+      failureRedirect: "/",
+      callbackURL
+    })(req, res, next);
+  },
   (req, res) => {
-
     console.log("Google Login Success");
     console.log(req.user);
 
     res.redirect(
       `${process.env.FRONTEND_URL}/dashboard`
     );
-
   }
 );
 
