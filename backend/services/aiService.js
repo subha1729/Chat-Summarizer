@@ -9,13 +9,6 @@ console.log(
   process.env.GEMINI_API_KEY?.substring(0, 10)
 );
 
-app.get("/debug-key", (req, res) => {
-  res.json({
-    prefix: process.env.GEMINI_API_KEY?.substring(0, 10),
-    length: process.env.GEMINI_API_KEY?.length
-  });
-});
-
 const model = genAI.getGenerativeModel({
   model: "gemini-2.5-flash-lite"
 });
