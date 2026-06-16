@@ -29,7 +29,7 @@ function Navbar() {
 
   const logout = async () => {
     try {
-      await API.get("/auth/logout");
+      await API.get("api/auth/logout");
       setUser(null);
       navigate("/");
     } catch {

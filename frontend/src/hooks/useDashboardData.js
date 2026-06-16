@@ -38,10 +38,10 @@ function useDashboardData() {
       ] = await Promise.all([
         // API.get("/auth/me"),
         API.get("/api/auth/check"),
-        API.get("/summaries"),
-        API.get("/stats"),
-        API.get("/accounts"),
-        API.get("/guilds")
+        API.get("/api/summaries"),
+        API.get("/api/stats"),
+        API.get("/api/accounts"),
+        API.get("/api/guilds")
       ]);
 
       if (userRes.data.authenticated) {
