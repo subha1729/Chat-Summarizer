@@ -128,11 +128,12 @@ function Dashboard() {
 
         console.error(error);
 
-        alert(
-          error.response?.data
-            ?.message ||
-          "Failed to generate summary"
-        );
+        console.log("FULL ERROR:", error.response?.data);
+
+alert(
+  JSON.stringify(error.response?.data) ||
+  "Failed to generate summary"
+);
 
       } finally {
 
