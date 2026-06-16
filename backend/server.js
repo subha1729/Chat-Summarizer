@@ -159,13 +159,6 @@ app.get("/test-auth", (req, res) => {
 });
 
 
-app.get("/debug-key", (req, res) => {
-  res.json({
-    prefix: process.env.GEMINI_API_KEY?.substring(0, 10),
-    length: process.env.GEMINI_API_KEY?.length
-  });
-});
-
 
 
 const PORT = process.env.PORT || 5000;
