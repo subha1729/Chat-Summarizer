@@ -103,7 +103,8 @@ function Dashboard() {
 
   }, [selectedGuild]);
 
-
+  console.log("selectedGuild", selectedGuild);
+  console.log(guilds[0]);
   const generateSummary =
     async () => {
 
