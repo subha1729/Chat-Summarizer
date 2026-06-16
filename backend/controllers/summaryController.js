@@ -47,7 +47,11 @@ const createSummary = async (req, res) => {
           "Need at least 5 meaningful messages to generate a summary"
       });
     }
-
+    
+    console.log("Messages found:", messages.length);
+console.log("Valid messages:", validMessages.length);
+console.log("Guild:", guildId);
+console.log("Channel:", channelName);
     const summaryText =
       await generateSummary(validMessages);
 
@@ -97,12 +101,14 @@ if (oldSummaries.length > 0) {
     res.status(201).json(summary);
 
   } catch (error) {
-    console.error(error);
+  console.error("SUMMARY ERROR");
+  console.error(error);
+  console.error(error.stack);
 
-    res.status(500).json({
-      message: error.message
-    });
-  }
+  res.status(500).json({
+    message: error.message,
+  });
+}
 };
 
 // Get All Summaries
