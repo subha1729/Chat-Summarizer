@@ -25,6 +25,7 @@ const askGemini = async (prompt) => {
   }
 };
 
+
 const generateSummary = async (messages) => {
   const chatText = messages
     .map(
@@ -146,6 +147,7 @@ ${chatText}
 
   return await askGemini(prompt);
 };
+
 
 module.exports = {
   generateSummary,
