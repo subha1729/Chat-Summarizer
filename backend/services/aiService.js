@@ -7,11 +7,13 @@ apiKey: process.env.OPENROUTER_API_KEY,
 
 const askAI = async (prompt) => {
 let lastError;
+ console.log("ASK AI CALLED");
 
 for (let i = 0; i < 3; i++) {
 try {
 const completion =
 await client.chat.completions.create({
+  
 model: "google/gemma-3-12b-it:free",
 messages: [
 {
