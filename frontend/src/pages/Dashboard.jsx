@@ -111,7 +111,10 @@ function Dashboard() {
       try {
 
         setLoading(true);
-
+        
+        console.log("Generating summary");
+console.log("Guild:", selectedGuild);
+console.log("Channel:", selectedChannel);
         await API.post(
           "/api/summaries/generate",
           {

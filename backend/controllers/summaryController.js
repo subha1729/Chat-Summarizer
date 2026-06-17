@@ -28,7 +28,16 @@ const createSummary = async (req, res) => {
     const messages = await Message.find(query)
       .sort({ createdAt: -1 })
       .limit(100);
+    
+      console.log("Query:", query);
+console.log("Messages Found:", messages.length);
 
+if (messages.length > 0) {
+  console.log(
+    "Newest Message:",
+    messages[0].content
+  );
+}
     if (messages.length === 0) {
       return res.status(404).json({
         message: "No messages found"
