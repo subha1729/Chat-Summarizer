@@ -15,7 +15,7 @@ process.env.GEMINI_API_KEY?.length
 );
 
 const model = genAI.getGenerativeModel({
-model: "gemini-2.5-flash-lite"
+model: "gemini-2.0-flash"
 });
 
 console.log("Gemini initialized");
@@ -38,7 +38,7 @@ const askGemini = async (prompt) => {
       );
 
       await new Promise(resolve =>
-        setTimeout(resolve, 2000)
+        setTimeout(resolve, (i+1)*5000)
       );
     }
   }

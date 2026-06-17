@@ -64,7 +64,10 @@ if (messages.length > 0) {
     console.log("Messages found:", messages.length);
     console.log("Valid messages:", validMessages.length);
     console.log("Sample message:", validMessages[0]);
-    
+    console.log(
+  "Latest message:",
+  validMessages[0]?.content
+);
     const summaryText =
       await generateSummary(validMessages);
 
