@@ -261,10 +261,10 @@ messages.forEach((msg, index) => {
 
 console.log("==============================");
 
-    if (messages.length < 5) {
+    if (messages.length < 1) {
       return res.status(400).json({
         message:
-          "Need at least 5 messages"
+          "Need at least 1 message"
       });
     }
 
