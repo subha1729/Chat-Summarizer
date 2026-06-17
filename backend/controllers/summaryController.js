@@ -48,10 +48,14 @@ const createSummary = async (req, res) => {
       });
     }
     
+    console.log("=== CREATE SUMMARY DEBUG ===");
+    console.log("User ID:", req.user._id);
+    console.log("Guild ID:", guildId);
+    console.log("Channel Name:", channelName);
     console.log("Messages found:", messages.length);
-console.log("Valid messages:", validMessages.length);
-console.log("Guild:", guildId);
-console.log("Channel:", channelName);
+    console.log("Valid messages:", validMessages.length);
+    console.log("Sample message:", validMessages[0]);
+    
     const summaryText =
       await generateSummary(validMessages);
 
@@ -101,9 +105,10 @@ if (oldSummaries.length > 0) {
     res.status(201).json(summary);
 
   } catch (error) {
-  console.error("SUMMARY ERROR");
+  console.error("=== SUMMARY ERROR ===");
   console.error(error);
   console.error(error.stack);
+  console.error("====================");
 
   res.status(500).json({
     message: error.message,

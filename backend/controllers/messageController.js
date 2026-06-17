@@ -43,6 +43,11 @@ const saveMessage = async (req, res) => {
       req.body.ownerDiscordId ||
       req.body.discordId;
 
+    console.log("=== SAVE MESSAGE DEBUG ===");
+    console.log("Guild ID:", req.body.guildId);
+    console.log("Owner Discord ID:", ownerDiscordId);
+    console.log("Guild Name:", req.body.guildName);
+
     let guild = null;
 
     if (ownerDiscordId) {
@@ -58,17 +63,37 @@ const saveMessage = async (req, res) => {
       });
     }
 
+    // Fallback: Create guild connection if it doesn't exist
     if (!guild) {
+      console.log("Guild not found - attempting to create one");
+      
+      let linkedAccount = null;
+      if (ownerDiscordId) {
+        linkedAccount = await ConnectedAccount.findOne({
+          platform: "discord",
+          platformUserId: ownerDiscordId
+        });
+      }
 
-      return res.status(404).json({
-        message:
-          "Guild not connected"
-      });
-
+      if (linkedAccount) {
+        console.log("Found linked account, creating guild connection");
+        guild = await GuildConnection.create({
+          userId: linkedAccount.userId,
+          guildId: req.body.guildId,
+          guildName: req.body.guildName,
+          discordId: ownerDiscordId
+        });
+        console.log("Guild connection created:", guild._id);
+      } else {
+        console.log("No linked account found for Discord ID:", ownerDiscordId);
+        return res.status(404).json({
+          message: "Guild not connected and no Discord account found"
+        });
+      }
     }
 
-    let ownerUserId =
-      guild.userId;
+    let ownerUserId = guild.userId;
+    console.log("Owner User ID:", ownerUserId);
 
     if (!ownerUserId) {
       const linkedAccount =
@@ -83,6 +108,7 @@ const saveMessage = async (req, res) => {
           linkedAccount.userId;
         guild.userId = ownerUserId;
         await guild.save();
+        console.log("Updated guild with user ID:", ownerUserId);
       }
     }
 
@@ -98,6 +124,9 @@ const saveMessage = async (req, res) => {
 
       });
 
+    console.log("Message saved successfully:", message._id);
+    console.log("=========================");
+
     res.status(201).json({
       message:
         "Message saved successfully",
@@ -105,6 +134,10 @@ const saveMessage = async (req, res) => {
     });
 
   } catch (error) {
+
+    console.error("=== MESSAGE SAVE ERROR ===");
+    console.error(error);
+    console.error("===========================");
 
     res.status(500).json({
       message:

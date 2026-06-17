@@ -24,6 +24,11 @@ client.on("messageCreate", async (message) => {
 
   try {
     
+    console.log("Sending message to backend...");
+    console.log("Backend URL:", process.env.BACKEND_URL);
+    console.log("Guild ID:", message.guild.id);
+    console.log("Guild Owner ID:", message.guild.ownerId);
+    
     const response = await axios.post(
            `${process.env.BACKEND_URL}/api/messages`,      {
         discordUser: message.author.username,
@@ -36,10 +41,10 @@ client.on("messageCreate", async (message) => {
       }
     );
 
-    console.log(response.data.message);
+    console.log("✅ Message saved:", response.data.message);
   } catch (error) {
     
-      console.error("FULL ERROR:");
+      console.error("❌ FULL ERROR:");
 
       console.error(error.response?.data);
 
