@@ -50,10 +50,10 @@ if (messages.length > 0) {
         msg.content.trim().length > 3
     );
 
-    if (validMessages.length < 5) {
+    if (validMessages.length < 1) {
       return res.status(400).json({
         message:
-          "Need at least 5 meaningful messages to generate a summary"
+          "Need at least 1 meaningful message to generate a summary"
       });
     }
     
@@ -203,10 +203,10 @@ const createUserSummary = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(100);
 
-    if (messages.length < 5) {
+    if (messages.length < 1) {
       return res.status(400).json({
         message:
-          "Need at least 5 messages"
+          "Need at least 1 messages"
       });
     }
 
