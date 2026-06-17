@@ -249,6 +249,18 @@ const createTopicSummary = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(100);
 
+    console.log("========== MESSAGES ==========");
+
+messages.forEach((msg, index) => {
+  console.log(
+    index + 1,
+    msg.channelName,
+    msg.content
+  );
+});
+
+console.log("==============================");
+
     if (messages.length < 5) {
       return res.status(400).json({
         message:
