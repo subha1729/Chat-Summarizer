@@ -14,7 +14,7 @@ try {
 const completion =
 await client.chat.completions.create({
   
-model: "google/gemma-3-12b-it:free",
+model: "openrouter/auto",
 messages: [
 {
 role: "user",
