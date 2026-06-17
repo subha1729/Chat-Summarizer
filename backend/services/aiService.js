@@ -5,6 +5,8 @@ baseURL: "https://openrouter.ai/api/v1",
 apiKey: process.env.OPENROUTER_API_KEY,
 });
 
+console.log("OPENROUTER KEY EXISTS:", !!process.env.OPENROUTER_API_KEY);
+
 const askAI = async (prompt) => {
 let lastError;
  console.log("ASK AI CALLED");
@@ -14,7 +16,7 @@ try {
 const completion =
 await client.chat.completions.create({
   
-model: "meta-llama/llama-3.1-8b-instruct:free",
+model: "openrouter/auto",
 messages: [
 {
 role: "user",
@@ -29,9 +31,14 @@ content: prompt,
 } catch (error) {
   lastError = error;
 
-  console.log(
-    `OpenRouter retry ${i + 1}/3`
-  );
+  console.log("OPENROUTER ERROR:");
+  console.log(error);
+
+  if (error.response) {
+    console.log(error.response.data);
+  }
+
+  console.log(`OpenRouter retry ${i + 1}/3`);
 
   await new Promise((resolve) =>
     setTimeout(resolve, 5000)

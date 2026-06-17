@@ -3,7 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 
 dotenv.config();
-require("./bot"); // START DISCORD BOT
+// require("../bot/index"); // START DISCORD BOT
 
 const session = require("express-session");
 const passport = require("passport");
