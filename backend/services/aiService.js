@@ -52,39 +52,61 @@ throw lastError;
 };
 
 const generateSummary = async (messages) => {
-const chatText = messages
-.map(
-(msg) =>
-`${msg.discordUser}: ${msg.content}`
-)
-.join("\n");
+  const chatText = messages
+    .map(
+      (msg) =>
+        `${msg.discordUser}: ${msg.content}`
+    )
+    .join("\n");
 
-const prompt = `
-You are an expert Discord chat summarizer.
+  console.log("=== CHAT TEXT SENT TO AI ===");
+  console.log(chatText);
+  console.log("============================");
 
-Return markdown only.
+  const prompt = `
+You are an expert Discord conversation analyst.
+
+Analyze ALL messages carefully.
+
+Return ONLY markdown.
 
 ## Main Topics
-
-* topic
+- topic 1
+- topic 2
+- topic 3
 
 ## Important Decisions
-
-* decision
+- decision
+- None
 
 ## Action Items
-
-* action
+- action item
+- None
 
 ## Overall Summary
+2-4 sentence summary.
 
-Short summary.
+Rules:
+- Analyze the ENTIRE conversation.
+- Do NOT focus only on the first message.
+- Identify study discussions.
+- Identify coding discussions.
+- Identify gaming discussions.
+- Identify music discussions.
+- Identify requests for help.
+- Identify resource sharing.
+- Mention repository links if discussed.
+- Mention playlists if discussed.
+- Mention assignments or lab reports if discussed.
+- Mention games if discussed.
+- Do not summarize as a greeting unless 80% of messages are greetings.
+- Use all available context.
 
 Conversation:
 ${chatText}
 `;
 
-return await askAI(prompt);
+  return await askAI(prompt);
 };
 
 const generateUserSummary = async (messages) => {
