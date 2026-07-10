@@ -18,8 +18,9 @@ function Dashboard() {
   const [userSummary, setUserSummary] =
     useState("");
 
-  const [loading, setLoading] =
-    useState(false);
+  const [activeAction, setActiveAction] =
+    useState(null);
+  const loading = activeAction !== null;
 
   const [channels, setChannels] =
     useState([]);
@@ -110,11 +111,11 @@ function Dashboard() {
 
       try {
 
-        setLoading(true);
+        setActiveAction("summary");
         
         console.log("Generating summary");
-console.log("Guild:", selectedGuild);
-console.log("Channel:", selectedChannel);
+        console.log("Guild:", selectedGuild);
+        console.log("Channel:", selectedChannel);
         await API.post(
           "/api/summaries/generate",
           {
@@ -133,14 +134,14 @@ console.log("Channel:", selectedChannel);
 
         console.log("FULL ERROR:", error.response?.data);
 
-alert(
-  JSON.stringify(error.response?.data) ||
-  "Failed to generate summary"
-);
+        alert(
+          JSON.stringify(error.response?.data) ||
+          "Failed to generate summary"
+        );
 
       } finally {
 
-        setLoading(false);
+        setActiveAction(null);
 
       }
     };
@@ -150,7 +151,7 @@ alert(
 
       try {
 
-        setLoading(true);
+        setActiveAction("topic");
 
         const res =
           await API.post(
@@ -173,7 +174,7 @@ alert(
 
       } finally {
 
-        setLoading(false);
+        setActiveAction(null);
 
       }
     };
@@ -183,7 +184,7 @@ alert(
 
       try {
 
-        setLoading(true);
+        setActiveAction("user");
 
         const res =
           await API.post(
@@ -206,7 +207,7 @@ alert(
 
       } finally {
 
-        setLoading(false);
+        setActiveAction(null);
 
       }
     };
@@ -230,6 +231,7 @@ alert(
 
       <SummaryButtons
         loading={loading}
+        activeAction={activeAction}
         generateSummary={generateSummary}
         generateTopicSummary={
           generateTopicSummary

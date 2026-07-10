@@ -1,54 +1,58 @@
 const OpenAI = require("openai");
 
 const client = new OpenAI({
-baseURL: "https://openrouter.ai/api/v1",
-apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: process.env.OPENROUTER_API_KEY,
 });
 
-console.log("OPENROUTER KEY EXISTS:", !!process.env.OPENROUTER_API_KEY);
+console.log(
+  "OPENROUTER KEY EXISTS:",
+  !!process.env.OPENROUTER_API_KEY
+);
 
 const askAI = async (prompt) => {
-let lastError;
- console.log("ASK AI CALLED");
+  let lastError;
 
-for (let i = 0; i < 3; i++) {
-try {
-const completion =
-await client.chat.completions.create({
-  
-model: "openrouter/auto",
-messages: [
-{
-role: "user",
-content: prompt,
-},
-],
-});
+  console.log("ASK AI CALLED");
 
+  for (let i = 0; i < 3; i++) {
+    try {
+      const completion =
+        await client.chat.completions.create({
+          model: "openrouter/auto",
 
-  return completion.choices[0].message.content;
+          messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
 
-} catch (error) {
-  lastError = error;
+          // Makes responses shorter and more consistent
+          temperature: 0.2,
+          max_tokens: 400,
+        });
 
-  console.log("OPENROUTER ERROR:");
-  console.log(error);
+      return completion.choices[0].message.content;
+    } catch (error) {
+      lastError = error;
 
-  if (error.response) {
-    console.log(error.response.data);
+      console.log("OPENROUTER ERROR:");
+      console.log(error);
+
+      if (error.response) {
+        console.log(error.response.data);
+      }
+
+      console.log(`OpenRouter retry ${i + 1}/3`);
+
+      await new Promise((resolve) =>
+        setTimeout(resolve, 5000)
+      );
+    }
   }
 
-  console.log(`OpenRouter retry ${i + 1}/3`);
-
-  await new Promise((resolve) =>
-    setTimeout(resolve, 5000)
-  );
-}
-
-
-}
-
-throw lastError;
+  throw lastError;
 };
 
 const generateSummary = async (messages) => {
@@ -64,43 +68,38 @@ const generateSummary = async (messages) => {
   console.log("============================");
 
   const prompt = `
-You are an expert Discord conversation analyst.
+You are an expert Discord conversation summarizer.
 
-Analyze ALL messages carefully.
+Return ONLY Markdown.
 
-Return ONLY markdown.
+# 📋 Conversation Summary
 
-## Main Topics
-- topic 1
-- topic 2
-- topic 3
+## 📌 Main Topics
+- **Topic** — max 8 words
+- **Topic** — max 8 words
+- **Topic** — max 8 words
 
-## Important Decisions
-- decision
+## ✅ Important Decisions
+- **Decision** — max 8 words
 - None
 
-## Action Items
-- action item
+## 🚀 Action Items
+- **Action** — max 8 words
 - None
 
-## Overall Summary
-2-4 sentence summary.
+## 📝 Overall Summary
+- Maximum TWO short bullet points.
+- Highlight only the most important ideas.
 
 Rules:
-- Analyze the ENTIRE conversation.
-- Do NOT focus only on the first message.
-- Identify study discussions.
-- Identify coding discussions.
-- Identify gaming discussions.
-- Identify music discussions.
-- Identify requests for help.
-- Identify resource sharing.
-- Mention repository links if discussed.
-- Mention playlists if discussed.
-- Mention assignments or lab reports if discussed.
-- Mention games if discussed.
-- Do not summarize as a greeting unless 80% of messages are greetings.
-- Use all available context.
+- Keep everything concise.
+- Maximum 3 bullets per section.
+- Never write long sentences.
+- Use bold for names, repositories, games, assignments, playlists, technologies, links, and important keywords.
+- Ignore greetings and casual chatter unless most of the conversation is greetings.
+- No introduction.
+- No conclusion.
+- Clean Markdown only.
 
 Conversation:
 ${chatText}
@@ -110,59 +109,90 @@ ${chatText}
 };
 
 const generateUserSummary = async (messages) => {
-const chatText = messages
-.map(
-(msg) =>
-`${msg.discordUser}: ${msg.content}`
-)
-.join("\n");
+  const chatText = messages
+    .map(
+      (msg) =>
+        `${msg.discordUser}: ${msg.content}`
+    )
+    .join("\n");
 
-const prompt = `
-Analyze the conversation.
+  const prompt = `
+You are an expert Discord conversation summarizer.
 
-Return markdown only.
+Return ONLY Markdown.
 
-# User Contributions
+# 👥 User Contributions
 
-## Username
+For each user:
 
-* contribution
+## **Username**
+- **Main contribution** — max 8 words
+- **Important point** — max 8 words (optional)
+
+Rules:
+- Maximum TWO bullets per user.
+- Every bullet MUST be under 8 words.
+- Use short phrases, NOT sentences.
+- Bold only important words.
+- Skip greetings, emojis, reactions, jokes, and filler messages.
+- Skip users without meaningful contributions.
+- Avoid repeating information.
+- Keep the output compact and easy to scan.
+- No introduction.
+- No conclusion.
 
 Conversation:
 ${chatText}
 `;
 
-return await askAI(prompt);
+  return await askAI(prompt);
 };
 
 const generateTopicSummary = async (messages) => {
-const chatText = messages
-.map(
-(msg) =>
-`${msg.discordUser}: ${msg.content}`
-)
-.join("\n");
+  const chatText = messages
+    .map(
+      (msg) =>
+        `${msg.discordUser}: ${msg.content}`
+    )
+    .join("\n");
 
-const prompt = `
-Group discussion by topics.
+  const prompt = `
+You are an expert Discord conversation analyzer.
 
-Return markdown only.
+Return ONLY Markdown.
 
-# Topic Analysis
+# 📚 Topic Summary
 
-## Topic
+Generate ONLY the 2-3 most important topics.
 
-* point
+For each topic:
+
+## 🎯 **Topic Name**
+- **Key point** — max 8 words
+- **Key point** — max 8 words
+- **Key point** — max 8 words (optional)
+
+Rules:
+- Maximum THREE topics.
+- Maximum THREE bullets per topic.
+- Every bullet MUST be under 8 words.
+- Use phrases instead of sentences.
+- Merge similar discussions.
+- Highlight only important names, repositories, games, assignments, technologies, links, and decisions.
+- Ignore greetings and small talk.
+- No introduction.
+- No conclusion.
+- Clean Markdown only.
 
 Conversation:
 ${chatText}
 `;
 
-return await askAI(prompt);
+  return await askAI(prompt);
 };
 
 module.exports = {
-generateSummary,
-generateUserSummary,
-generateTopicSummary,
+  generateSummary,
+  generateUserSummary,
+  generateTopicSummary,
 };

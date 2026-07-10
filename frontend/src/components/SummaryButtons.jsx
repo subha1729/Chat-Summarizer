@@ -2,6 +2,7 @@ import "../styles/summaryButtons.css";
 
 function SummaryButtons({
   loading,
+  activeAction,
   generateSummary,
   generateTopicSummary,
   generateUserSummary
@@ -13,29 +14,29 @@ function SummaryButtons({
         onClick={generateSummary}
         disabled={loading}
       >
-        {loading
+        {activeAction === "summary"
           ? "Generating..."
           : "Generate Summary"}
       </button>
 
       <button
         className="generate-btn"
-        onClick={
-          generateTopicSummary
-        }
+        onClick={generateTopicSummary}
         disabled={loading}
       >
-        Topic Summary
+        {activeAction === "topic"
+          ? "Generating..."
+          : "Topic Summary"}
       </button>
 
       <button
         className="generate-btn"
-        onClick={
-          generateUserSummary
-        }
+        onClick={generateUserSummary}
         disabled={loading}
       >
-        User Summary
+        {activeAction === "user"
+          ? "Generating..."
+          : "User Summary"}
       </button>
     </div>
   );
